@@ -42,4 +42,4 @@ const userSchema = new Schema(
 
 const User = model('user', userSchema)
 
-module.exports = Course;
+module.exports = User;
