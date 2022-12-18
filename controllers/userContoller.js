@@ -6,3 +6,23 @@
 // w/friendId a POST route to add a new friend to a user's friend list
 // w/friendId a DELETE route to remove a friend from a user's friend list
 
+const {ObjectId} = require('mongoose').Types
+const {User, Thought} = require('../models')
+
+module.exports = {
+    // GET all users
+    getUsers(req,res) {
+        User.find()
+            .then (async (Users) => {
+                const userObj = {
+                    Users
+                };
+                return res.json(userObj)
+            })
+            .catch((err) =>{
+                console.log(err);
+                return res.status(500).json(err)
+            })
+    }
+
+}
