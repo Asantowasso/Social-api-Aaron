@@ -7,7 +7,6 @@
 // w/friendId a DELETE route to remove a friend from a user's friend list
 
 const {ObjectId} = require('mongoose').Types
-const { createSecureServer } = require('http2');
 const {User, Thought} = require('../models')
 
 module.exports = {
@@ -25,8 +24,11 @@ module.exports = {
                 return res.status(500).json(err)
             })
     },
-        //create (POST) a user
 
-    createUser(req,res)
+    createUser(req,res){
+        User.create(req.body)
+        .then((user)=> res.json(user))
+        .catch((err)=> res.status(500).json(err));
+    }
 
 }
