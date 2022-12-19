@@ -1,6 +1,6 @@
-// A route to GET all users
-// A route to GET all users by _id along with their thought and friend data
-// A route to POST a new user
+// A route to GET all users(x)
+// A route to GET all users by _id along with their thought and friend data(x)
+// A route to POST a new user(x)
 // A PUT route to update a user by their ID
 // A DELETE route to remove a user by their ID
 // w/friendId a POST route to add a new friend to a user's friend list
@@ -13,6 +13,10 @@ const {
   getSingleUser,
   createUser,
 } = require("../../controllers/userController");
-router.route("/").get(getUsers).get(getSingleUser).post(createUser);
+router.route("/").get(getUsers).post(createUser);
+
+
+router.route("/getSingleUser/:userId").get(getSingleUser);
+
 
 module.exports = router;

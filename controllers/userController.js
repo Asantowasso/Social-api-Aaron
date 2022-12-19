@@ -1,5 +1,5 @@
 // A route to GET all users(x)
-// A route to GET all users by _id along with their thought and friend data
+// A route to GET all users by _id along with their thought and friend data(x)
 // A route to POST a new user(x)
 // A PUT route to update a user by their ID
 // A DELETE route to remove a user by their ID
@@ -30,7 +30,7 @@ module.exports = {
     User.findOne({_id: req.params.userId})
     .select('-__v')
     .then(async(User)=>
-        !user
+        !User
             ?res.status(404).json({message: 'cannot find user with that ID'})
             :res.json({
                 User
