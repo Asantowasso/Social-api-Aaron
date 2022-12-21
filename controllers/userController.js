@@ -50,14 +50,15 @@ module.exports = {
   },
 
   //PUT route to update a user by their Id
-    updateUser(req,res){
-
-  const attributes = {email: req.params.email, username: req.params.username}
-    User.findOneAndUpdate({_id: req.params.userId},attributes)
-    .then((user) => res.json(user))
-    .catch((err) => res.status(500).json(err))
-                                            },
-
+  updateUser(req, res) {
+    const attributes = {
+      email: req.body.email,
+      username: req.body.username,
+    };
+    User.findOneAndUpdate({ _id: req.params.userId }, attributes, {new:true})
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+  },
 
   //delete route to remove a user by Id
   deleteUser(req, res) {
@@ -76,25 +77,19 @@ module.exports = {
       });
   },
 
-    //A POST route to add a friend
-    addFriend(req,res){
-    console.log('Added a friend!');
+  //A POST route to add a friend
+  addFriend(req, res) {
+    console.log("Added a friend!");
     console.log(req.body);
     User.findOneAndUpdate(
-        {_id: req.params.userId},
-        {$addToSet: {friend:{friendId: req.params.assignmentId }} },
+      { _id: req.params.userId },
+      { $addToSet: { friend: { friendId: req.params.assignmentId } } }
     )
-    .then((User)=>
+      .then((User) =>
         !User
-         ? res
-            .status(404)({message: 'No User found with that Id'})
-        :res.json(User)
-    )
-    .catch((err) => res.status(500).json(err));
-    },
-
-
-
-
+          ? res.status(404)({ message: "No User found with that Id" })
+          : res.json(User)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };
-
