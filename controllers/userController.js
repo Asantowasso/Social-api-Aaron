@@ -26,21 +26,20 @@ module.exports = {
   },
 
   //GET a user by Id
-  getSingleUser(req,res){
-    User.findOne({_id: req.params.userId})
-    .select('-__v')
-    .then(async(User)=>
+  getSingleUser(req, res) {
+    User.findOne({ _id: req.params.userId })
+      .select("-__v")
+      .then(async (User) =>
         !User
-            ?res.status(404).json({message: 'cannot find user with that ID'})
-            :res.json({
-                User
+          ? res.status(404).json({ message: "cannot find user with that ID" })
+          : res.json({
+              User,
             })
-    )
-    .catch((err)=> {
+      )
+      .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
-    })
-
+      });
   },
 
   //POST route to create a user
@@ -50,25 +49,20 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-
   //delete route to remove a user by Id
-  deleteUser(req,res){
-    User.findOneAndRemove({_id: req.params.userId})
-        
-        .then(async(User)=>
+  deleteUser(req, res) {
+    User.findOneAndRemove({ _id: req.params.userId })
+
+      .then(async (User) =>
         !User
-        ? res.status(404).json({message: 'This user does not exist'})
-        :res.json({
-            User
-        })
-        
-        )
-        .catch((err)=> {
-            console.log(err);
-            return res.status(500).json(err);
-        })
-
-  }
-
-
+          ? res.status(404).json({ message: "This user does not exist" })
+          : res.json({
+              User,
+            })
+      )
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
 };

@@ -17,7 +17,7 @@ const {
 router.route("/").get(getUsers).post(createUser);
 
 
-router.route("/getSingleUser/:userId").get(getSingleUser).delete(deleteUser);
-
+router.route("/getSingleUser/:userId").get(getSingleUser);
+router.route("/deleteUser/:userId").delete(deleteUser);
 
 module.exports = router;
