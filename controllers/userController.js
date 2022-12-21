@@ -51,7 +51,24 @@ module.exports = {
   },
 
 
-  //delete route to remove a user
+  //delete route to remove a user by Id
+  deleteUser(req,res){
+    User.findOneAndRemove({_id: req.params.userId})
+        
+        .then(async(User)=>
+        !User
+        ? res.status(404).json({message: 'This user does not exist'})
+        :res.json({
+            User
+        })
+        
+        )
+        .catch((err)=> {
+            console.log(err);
+            return res.status(500).json(err);
+        })
+
+  }
 
 
 };
