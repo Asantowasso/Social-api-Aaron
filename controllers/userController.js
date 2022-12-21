@@ -51,9 +51,18 @@ module.exports = {
 
   //PUT route to update a user by their Id
   updateUser(req, res){
-    User.findOneAndUpdate({ _id: req.params.userId})
-    .then((user) => res.json(user))
-    .catch((err) => res.status(500).json(err))
+    User.findOneAndUpdate({ _id: req.params.userId })
+    .then((User) =>
+    !User
+        ? res.status(404).json({message: "We could not update this user"})
+        : res.json ({
+            User,
+        })
+    )
+    .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
 
   },
 
