@@ -2,7 +2,7 @@
 // A route to GET all users by _id along with their thought and friend data(x)
 // A route to POST a new user(x)
 // A PUT route to update a user by their ID
-// A DELETE route to remove a user by their ID
+// A DELETE route to remove a user by their ID(x)
 // w/friendId a POST route to add a new friend to a user's friend list
 // w/friendId a DELETE route to remove a friend from a user's friend list
 
@@ -47,6 +47,14 @@ module.exports = {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
+  },
+
+  //PUT route to update a user by their Id
+  updateUser(req, res){
+    User.findOneAndUpdate({ _id: req.params.userId})
+    .then((user) => res.json(user))
+    .catch((err) => res.status(500).json(err))
+
   },
 
   //delete route to remove a user by Id
