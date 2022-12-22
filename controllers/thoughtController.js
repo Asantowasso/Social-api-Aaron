@@ -38,9 +38,10 @@ module.exports = {
 
   // Create a thought
   createThought(req, res) {
-    User.findOneAndUpdate(
+
+    Thought.create(
       {_id: req.params.userId},
-      {$addToSet: {thoughts: req.body}}
+      {$addToSet: {thoughts: _id}}
     )
     .then ( (user) =>
       !User

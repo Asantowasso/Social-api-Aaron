@@ -83,7 +83,7 @@ module.exports = {
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friend: { friendId: req.params.userId } } }, {new:true}
+      { $addToSet: { friends: req.body } }, {new:true}
     )
       .then((User) =>
         !User
