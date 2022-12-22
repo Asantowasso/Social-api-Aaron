@@ -42,7 +42,7 @@ module.exports = {
       {_id: req.params.userId},
       {$addToSet: {thoughts: req.body}}
     )
-    .then ( (users) =>
+    .then ( (user) =>
       !User
       ? res
        .status(404)
