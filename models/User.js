@@ -4,6 +4,7 @@
 // friends an Array of _id values referencing the user model a self-reference
 const { Schema, model } = require("mongoose");
 
+
 const userSchema = new Schema({
   username: {
     type: String,

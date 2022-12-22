@@ -1,7 +1,7 @@
 // A route to GET all users(x)
 // A route to GET all users by _id along with their thought and friend data(x)
 // A route to POST a new user(x)
-// A PUT route to update a user by their ID
+// A PUT route to update a user by their ID (x)
 // A DELETE route to remove a user by their ID(x)
 // w/friendId a POST route to add a new friend to a user's friend list
 // w/friendId a DELETE route to remove a friend from a user's friend list
@@ -83,7 +83,7 @@ module.exports = {
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friend: { friendId: req.params.assignmentId } } }
+      { $addToSet: { friend: { friendId: req.params.userId } } }, {new:true}
     )
       .then((User) =>
         !User
