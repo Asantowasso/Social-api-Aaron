@@ -3,7 +3,7 @@
 // A route to POST a new user(x)
 // A PUT route to update a user by their ID (x)
 // A DELETE route to remove a user by their ID(x)
-// w/friendId a POST route to add a new friend to a user's friend list
+// w/friendId a POST route to add a new friend to a user's friend list (x)
 // w/friendId a DELETE route to remove a friend from a user's friend list
 
 const { ObjectId } = require("mongoose").Types;
@@ -83,7 +83,7 @@ module.exports = {
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $push: { friends: params.friendId } }, {new:true}
+      { $push: { friends: req.params.friendId } }, {new:true}
     )
       .then((User) =>
         !User
