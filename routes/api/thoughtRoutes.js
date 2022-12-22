@@ -10,6 +10,6 @@ const { getThoughts, getSingleThought, createThought  } = require("../../control
 
 router.route("/").get(getThoughts)
 router.route("/getSingleThought/userId").get(getSingleThought)
-router.route("createThought/userId").post(createThought)
+router.route("/createThought/userId").post(createThought)
 
 module.exports = router;
