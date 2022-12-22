@@ -3,7 +3,7 @@
 // A route to POST a new user(x)
 // A PUT route to update a user by their ID (x)
 // A DELETE route to remove a user by their ID(x)
-// w/friendId a POST route to add a new friend to a user's friend list
+// w/friendId a POST route to add a new friend to a user's friend list(x)
 // w/friendId a DELETE route to remove a friend from a user's friend list
 
 const router = require("express").Router();

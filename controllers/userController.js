@@ -55,7 +55,7 @@ module.exports = {
       email: req.body.email,
       username: req.body.username,
     };
-    User.findOneAndUpdate({ _id: req.params.userId }, attributes, {new:true})
+    User.findOneAndUpdate({ _id: req.params.userId }, attributes, { new: true })
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
@@ -83,7 +83,8 @@ module.exports = {
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $push: { friends: req.params.friendId } }, {new:true}
+      { $push: { friends: req.params.friendId } },
+      { new: true }
     )
       .then((User) =>
         !User
@@ -91,5 +92,24 @@ module.exports = {
           : res.json(User)
       )
       .catch((err) => res.status(500).json(err));
+  },
+
+  // A Delete route to remove a user from a friends list
+  deleteFriend(req, res) {
+    console.log("Removed a friend!");
+    console.log(req.body);
+    User.findOneandRemove(
+        {_id: req.params.UserId},
+        {$pull: {friends: req.params.friendId} },
+        {new: true}
+    )
+
+    .then((User) =>
+    !User
+      ? res.status(404)({ message: "No User found with that Id" })
+      : res.json(User)
+  )
+  .catch((err) => res.status(500).json(err));
+
   },
 };
