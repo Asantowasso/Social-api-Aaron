@@ -12,8 +12,9 @@ const { User, Thought } = require("../models");
 module.exports = {
   // GET all users
   getUsers(req, res) {
-    User.find()
     
+    User.find()
+    .populate("thoughts")
       .then(async (Users) => {
         const userObj = {
           Users,
