@@ -40,16 +40,31 @@ module.exports = {
   createThought(req, res) {
 
     Thought.create(
-      {_id: req.params.userId},
-      {$push: {thoughts: req.params.userId}}
+      req.body
+      
     )
-    .then ( (user) =>
-      !User
-      ? res
-       .status(404)
-       .json( {message : "Did not find a user with that Id"})
-      : res.json(user)
-    )
+    .then ( (thought) => {
+      console.log(thought._id)
+      return User.findOneAndUpdate(
+      
+        {_id: req.params.userId},
+        {$addToSet: {thoughts: thought._id}},
+        {new: true}
+      )
+    }
+    ).then ((user) =>{
+    console.log(user);
+    res.json({message: "added a thought to a user"})
+     })
+ 
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json(err)
+    })
+      
+      
+      
+    
 
   }
 
