@@ -79,6 +79,7 @@ module.exports = {
 
   //A POST route to add a friend
   addFriend(req, res) {
+    
     console.log("Added a friend!");
     console.log(req.body);
     User.findOneAndUpdate(

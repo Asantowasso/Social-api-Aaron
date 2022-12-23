@@ -41,7 +41,7 @@ module.exports = {
 
     Thought.create(
       {_id: req.params.userId},
-      {$addToSet: {thoughts: _id}}
+      {$push: {thoughts: req.params.userId}}
     )
     .then ( (user) =>
       !User
