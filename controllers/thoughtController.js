@@ -9,67 +9,74 @@ const { User, Thought } = require("../models");
 
 module.exports = {
   // GET all thoughts
-  getThoughts(req, res){
+  getThoughts(req, res) {
     Thought.find()
       .then(async (Thoughts) => {
         const thoughtObj = {
-          Thoughts
+          Thoughts,
         };
-        return res.json(thoughtObj)
+        return res.json(thoughtObj);
       })
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
-      })
-
+      });
   },
 
   // GET thoughts by Id
-  getSingleThought(req, res){
-    Thought.findOne({_id: req.params.thoughtId})
-    .select('__v')
-    .then((thought) =>
-      !thought
-      ? res.status(404).json({message: 'No thought with that Id'})
-      :res.json(thought)
-    )
-    .catch((err) => res.status(500).json(err));
+  getSingleThought(req, res) {
+    Thought.findOne({ _id: req.body.thoughtId })
+      .select("-__v")
+      .then(async(thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with that Id" })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
   },
 
   // Create a thought
   createThought(req, res) {
+    Thought.create(req.body)
+      .then((thought) => {
+        console.log(thought._id);
+        return User.findOneAndUpdate(
+          { _id: req.params.userId },
+          { $addToSet: { thoughts: thought._id } },
+          { new: true }
+        );
+      })
+      .then((user) => {
+        console.log(user);
+        res.json({ message: "added a thought to a user" });
+      })
 
-    Thought.create(
-      req.body
-      
-    )
-    .then ( (thought) => {
-      console.log(thought._id)
-      return User.findOneAndUpdate(
-      
-        {_id: req.params.userId},
-        {$addToSet: {thoughts: thought._id}},
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+
+  },
+
+  // a DELETE route to remove a thought
+  deleteThought(req, res) {
+    console.log("Removed a thought!");
+    console.log(req.body);
+    Thought.findOneAndUpdate(
+        {_id: req.params.UserId},
+        {$pull: {thoughts: params._id} },
         {new: true}
-      )
-    }
-    ).then ((user) =>{
-    console.log(user);
-    res.json({message: "added a thought to a user"})
-     })
- 
-    .catch((err) => {
-      console.log(err);
-      return res.status(500).json(err)
-    })
-      
-      
-      
-    
+    )
 
-  }
+    .then((Thought) =>
+    !Thought
+      ? res.status(404)({ message: "No Thought found with that Id" })
+      : res.json(Thought)
+  )
+  .catch((err) => res.status(500).json(err));
+
+  },
 
 
 
-
-
-}
+};

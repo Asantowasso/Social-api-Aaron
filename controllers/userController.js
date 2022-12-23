@@ -15,6 +15,7 @@ module.exports = {
     
     User.find()
     .populate("thoughts")
+    
       .then(async (Users) => {
         const userObj = {
           Users,
