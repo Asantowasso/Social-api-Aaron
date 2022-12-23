@@ -13,7 +13,7 @@ module.exports = {
   // GET all users
   getUsers(req, res) {
     User.find()
-    .populate("thoughts")
+    
       .then(async (Users) => {
         const userObj = {
           Users,
