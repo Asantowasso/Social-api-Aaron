@@ -1,5 +1,5 @@
 // A route to GET all thoughts (x)
-// A route to GET a thought by its _id
+// A route to GET a thought by its _id(x)
 // A route to POST or create a new thought (x)
 // A PUT route to update a thought by it's _id
 // A route to Delete a thought by it's _id
@@ -10,8 +10,8 @@ const { getThoughts, getSingleThought, createThought, deleteThought  } = require
 
 router.route("/").get(getThoughts).post(createThought)
 router.route("/:userId").post(createThought)
-router.route("/_id").delete(deleteThought)
-router.route("/:_id").get(getSingleThought)
+router.route("/:thoughtId").delete(deleteThought)
+router.route("/:thoughtId").get(getSingleThought)
 
 module.exports = router;
 
