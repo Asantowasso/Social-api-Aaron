@@ -25,12 +25,12 @@ module.exports = {
 
   // GET thoughts by Id
   getSingleThought(req, res) {
-    Thought.findOne({ _id: req.body.thoughtId })
+    Thought.findOne({ _id: req.params.thoughtId })
       .select("-__v")
-      .then(async(thought) =>
-        !thought
+      .then((Thought) =>
+        !Thought
           ? res.status(404).json({ message: "No thought with that Id" })
-          : res.json(thought)
+          : res.json(Thought)
       )
       .catch((err) => res.status(500).json(err));
   },
