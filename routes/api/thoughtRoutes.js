@@ -2,16 +2,17 @@
 // A route to GET a thought by its _id(x)
 // A route to POST or create a new thought (x)
 // A PUT route to update a thought by it's _id
-// A route to Delete a thought by it's _id
+// A route to Delete a thought by it's _id (x)
 
 const router = require("express").Router();
 
-const { getThoughts, getSingleThought, createThought, deleteThought  } = require("../../controllers/thoughtController");
+const { getThoughts, getSingleThought, createThought, deleteThought, updateThought  } = require("../../controllers/thoughtController");
 
 router.route("/").get(getThoughts).post(createThought)
 router.route("/:userId").post(createThought)
 router.route("/:thoughtId").delete(deleteThought)
 router.route("/:thoughtId").get(getSingleThought)
+router.route("/:thoughtId").put(updateThought)
 
 module.exports = router;
 

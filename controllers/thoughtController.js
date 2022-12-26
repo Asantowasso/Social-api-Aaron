@@ -2,7 +2,7 @@
 // A route to GET a thought by its _id(x)
 // A route to POST or create a new thought (x)
 // A PUT route to update a thought by it's _id
-// A route to Delete a thought by it's _id
+// A route to Delete a thought by it's _id (x)
 
 const { ObjectId } = require("mongoose").Types;
 const { User, Thought } = require("../models");
@@ -60,22 +60,28 @@ module.exports = {
 
   // a DELETE route to remove a thought
   deleteThought(req, res) {
-    console.log("Removed a thought!");
-    console.log(req.body);
-    Thought.findOneAndUpdate(
-        {_id: req.params.UserId},
-        {$pull: {thoughts: params._id} },
-        {new: true}
-    )
-
-    .then((Thought) =>
+    Thought.findOneAndDelete({_id: req.params.thoughtId})
+    .select("-__v")
+    .then((Thought)=>
     !Thought
-      ? res.status(404)({ message: "No Thought found with that Id" })
-      : res.json(Thought)
-  )
-  .catch((err) => res.status(500).json(err));
-
+    ? res.status(404).json({message: "No thought with that Id"})
+    : res.json(Thought)
+    
+    )
+    .catch((err) => res.status(500).json(err))
+    
   },
+
+  // PUT route to update a thought
+  updateThought(req,res){
+    const attributes = {
+      thoughtText: req.body.thoughtText
+    };
+    Thought.findOneAndUpdate({_id: req.params.thoughtId}, attributes, {new: true})
+    .then((thought) => res.json(thought))
+
+  }
+
 
 
 
