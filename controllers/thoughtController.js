@@ -1,7 +1,7 @@
 // A route to GET all thoughts (x)
 // A route to GET a thought by its _id(x)
 // A route to POST or create a new thought (x)
-// A PUT route to update a thought by it's _id
+// A PUT route to update a thought by it's _id (x)
 // A route to Delete a thought by it's _id (x)
 
 const { ObjectId } = require("mongoose").Types;
@@ -80,9 +80,28 @@ module.exports = {
     Thought.findOneAndUpdate({_id: req.params.thoughtId}, attributes, {new: true})
     .then((thought) => res.json(thought))
 
+  },
+
+// POST create a reaction
+  createReaction(req,res){
+    Reaction.create(req.body)
+    .then((reaction) => {
+      return Thought.findOneAndUpdate(
+        {_id: req.body.thoughtId},
+        {$push: {reactions: reaction._id}},
+        {new: true}
+      )
+    })
+    .then((thought)=>
+    !thought
+    ? res
+      .status(404)
+      .json ({message:'Made a reaction but could not find that thought'})
+    :res.json({message: 'Made a reaction'})
+    )
+    .cath((err) => {
+      console.error(err)
+    })
   }
-
-
-
 
 };
