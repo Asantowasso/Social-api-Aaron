@@ -12,10 +12,9 @@ const { User, Thought } = require("../models");
 module.exports = {
   // GET all users
   getUsers(req, res) {
-    
     User.find()
-    .populate("thoughts")
-    
+      .populate("thoughts")
+
       .then(async (Users) => {
         const userObj = {
           Users,
@@ -82,12 +81,11 @@ module.exports = {
 
   //A POST route to add a friend
   addFriend(req, res) {
-    
     console.log("Added a friend!");
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $push: { friends: req.params.friendId } },
+      { $addToSet: { friends: req.body.friendId } },
       { new: true }
     )
       .then((User) =>
@@ -99,21 +97,21 @@ module.exports = {
   },
 
   // A Delete route to remove a user from a friends list
-  deleteFriend(req, res) {
-    console.log("Removed a friend!");
+  removeFriend(req, res) {
+    console.log("Removed a friend!")
     console.log(req.body);
     User.findOneAndUpdate(
-        {_id: req.params.UserId},
-        {$pull: {friends: req.params.friendId} },
-        {new: true}
+      { _id: req.params.userId },
+      { $pull: { friends: { friendId: req.params.friendId } } },
+      { new: true }
     )
-
-    .then((User) =>
-    !User
-      ? res.status(404)({ message: "No User found with that Id" })
+    .then((user) =>
+    !user
+      ?res
+        .status(404)
+        .json({message: 'No user with that ID'})
       : res.json(User)
-  )
-  .catch((err) => res.status(500).json(err));
-
+    )
+    .catch((err) => res.status(500).json(err))
   },
 };
