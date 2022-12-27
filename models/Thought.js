@@ -29,9 +29,12 @@ const ReactionSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+
+    
+
+
   
-  }
-);
+  });
 
 const thoughtSchema = new Schema({
   thoughtText: {
@@ -56,7 +59,7 @@ const thoughtSchema = new Schema({
 {
   toJSON: {
     getters: true,
-    virtuals:true
+    
   },
 }
 

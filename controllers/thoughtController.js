@@ -83,25 +83,22 @@ module.exports = {
   },
 
 // POST create a reaction
-  createReaction(req,res){
-    Reaction.create(req.body)
-    .then((reaction) => {
-      return Thought.findOneAndUpdate(
-        {_id: req.body.thoughtId},
-        {$push: {reactions: reaction._id}},
-        {new: true}
-      )
-    })
-    .then((thought)=>
-    !thought
-    ? res
-      .status(404)
-      .json ({message:'Made a reaction but could not find that thought'})
-    :res.json({message: 'Made a reaction'})
+  addReaction(req,res){
+    console.log('You are giving a reaction')
+    console.log(req.body)
+    Thought.findOneAndUpdate(
+    {_id: req.params.thoughtId},
+    {$addToSet: {reactions: req.body}},
+    {new:true}
     )
-    .cath((err) => {
-      console.error(err)
-    })
+    .then((thought) =>
+    !thought
+      ?res
+        .status(404)
+        .json({message: "No thought with that ID"})
+      : res.json(thought)
+    )
+    .catch((err) => res.status(500).json(err));
   }
 
 };
