@@ -82,11 +82,10 @@ module.exports = {
   //A POST route to add a friend
   addFriend(req, res) {
     console.log("Added a friend!");
-    console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: req.body.friendId } },
-      { new: true }
+      { $push: { friends: req.params.friendId } },
+      {  new: true }
     )
       .then((User) =>
         !User
@@ -99,7 +98,6 @@ module.exports = {
   // A Delete route to remove a user from a friends list
   removeFriend(req, res) {
     console.log("Removed a friend!")
-    console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $pull: { friends: { friendId: req.params.friendId } } },
