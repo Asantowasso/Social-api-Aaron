@@ -28,7 +28,7 @@ The needed package to use the application can be installed with an npm i in the 
 This application was created by Aaron Santowasso with assistance from the class materials.
 
 ## Video
-Link-
+Link- https://drive.google.com/file/d/1e66kPc6XpYh-KxASAZ5azrFmF9Rurcrr/view
 
 ## License
 Licensed under the MIT license.
