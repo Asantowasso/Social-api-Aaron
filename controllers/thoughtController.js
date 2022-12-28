@@ -2,7 +2,7 @@
 // A route to GET a thought by its _id(x)
 // A route to POST or create a new thought (x)
 // A PUT route to update a thought by it's _id (x)
-// A route to Delete a thought by it's _id (x)
+// A route to Delete a thought by it's _id 
 
 const { ObjectId } = require("mongoose").Types;
 const { User, Thought } = require("../models");
@@ -103,6 +103,7 @@ module.exports = {
 
   //DELETE to remove a reaction
   removeReaction(req,res){
+    console.log("Removed a reaction!")
     Thought.findOneAndUpdate(
       {_id: req.params.thoughtId},
       {$pull: {reaction:{reactionId: req.params.reactionId }}},
