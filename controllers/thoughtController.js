@@ -106,7 +106,7 @@ module.exports = {
     console.log("Removed a reaction!")
     Thought.findOneAndUpdate(
       {_id: req.params.thoughtId},
-      {$pull: {reaction:{reactionId: req.body.reactionId }}},
+      {$pull: {reactions:{_id: req.params.reactionId }}},
       {new:true}
     ).then ((thought) =>
     !thought
